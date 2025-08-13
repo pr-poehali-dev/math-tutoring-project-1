@@ -70,7 +70,7 @@ const ProgramSection = () => {
     { id: 59, title: "Окружность и круг", type: "Геометрия" }
   ]
   
-  const curriculum = fullCurriculum.slice(0, 20)
+  const curriculum = fullCurriculum.slice(0, 8)
 
   const bonusLessons = [
     "Как на пальцах считать до 1000",
@@ -101,7 +101,7 @@ const ProgramSection = () => {
           
           <TabsContent value="main">
             <div className="grid gap-3 md:grid-cols-2 md:gap-4">
-              {curriculum.slice(0, 20).map((lesson) => (
+              {curriculum.map((lesson) => (
                 <Card key={lesson.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="p-3 md:p-4">
                     <div className="flex items-start justify-between gap-3">
