@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import Icon from '@/components/ui/icon'
 
 const Index = () => {
@@ -17,6 +18,7 @@ const Index = () => {
     grade: '',
     message: ''
   })
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -140,63 +142,119 @@ const Index = () => {
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-blue-600">МатемАтика ОГЭ</h1>
+          <h1 className="text-lg md:text-xl font-bold text-blue-600">МатемАтика ОГЭ</h1>
+          
+          {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6">
             <a href="#about" className="text-gray-700 hover:text-blue-600 transition-colors">О занятиях</a>
             <a href="#teacher" className="text-gray-700 hover:text-blue-600 transition-colors">Преподаватель</a>
             <a href="#program" className="text-gray-700 hover:text-blue-600 transition-colors">Программа</a>
             <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Записаться</a>
           </div>
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          
+          {/* Desktop CTA Button */}
+          <Button className="hidden md:flex bg-blue-600 hover:bg-blue-700">
             Записаться на пробное занятие
           </Button>
+          
+          {/* Mobile Menu */}
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Icon name="Menu" size={24} />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[280px] sm:w-[350px]">
+              <div className="flex flex-col space-y-6 pt-6">
+                <h2 className="text-lg font-semibold text-gray-900">Меню</h2>
+                <div className="flex flex-col space-y-4">
+                  <a 
+                    href="#about" 
+                    className="text-lg text-gray-700 hover:text-blue-600 transition-colors py-2"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    О занятиях
+                  </a>
+                  <a 
+                    href="#teacher" 
+                    className="text-lg text-gray-700 hover:text-blue-600 transition-colors py-2"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Преподаватель
+                  </a>
+                  <a 
+                    href="#program" 
+                    className="text-lg text-gray-700 hover:text-blue-600 transition-colors py-2"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Программа
+                  </a>
+                  <a 
+                    href="#contact" 
+                    className="text-lg text-gray-700 hover:text-blue-600 transition-colors py-2"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Записаться
+                  </a>
+                </div>
+                <Button 
+                  size="lg" 
+                  className="bg-blue-600 hover:bg-blue-700 w-full mt-6"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Icon name="Phone" size={20} className="mr-2" />
+                  Записаться на занятие
+                </Button>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 px-4">
+      <section className="pt-24 pb-12 md:pb-16 px-4">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <Badge className="bg-blue-100 text-blue-800 px-4 py-2">
-                <Icon name="GraduationCap" size={16} className="mr-2" />
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="space-y-4 md:space-y-6 text-center md:text-left">
+              <Badge className="bg-blue-100 text-blue-800 px-3 py-2 text-sm">
+                <Icon name="GraduationCap" size={14} className="mr-2" />
                 Подготовка к ОГЭ по математике
               </Badge>
               
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
                 Математика через
                 <span className="text-blue-600"> понимание</span>,
                 а не зубрёжку
               </h1>
               
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
                 Студент ДВФ с уникальной методикой: учим мыслить математически, 
                 а не подставлять цифры в формулы. Результат — глубокое понимание предмета.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+              <div className="flex flex-col gap-3 sm:gap-4">
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto">
                   <Icon name="Play" size={20} className="mr-2" />
                   Записаться на пробное занятие
                 </Button>
-                <Button variant="outline" size="lg">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   <Icon name="BookOpen" size={20} className="mr-2" />
                   Посмотреть программу
                 </Button>
               </div>
               
-              <div className="flex items-center space-x-6 text-sm text-gray-600">
-                <div className="flex items-center">
-                  <Icon name="Users" size={16} className="mr-2 text-blue-600" />
-                  8-12 человек в группе
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-gray-600">
+                <div className="flex items-center justify-center md:justify-start">
+                  <Icon name="Users" size={16} className="mr-2 text-blue-600 flex-shrink-0" />
+                  <span>8-12 человек в группе</span>
                 </div>
-                <div className="flex items-center">
-                  <Icon name="Calendar" size={16} className="mr-2 text-blue-600" />
-                  59 занятий в году
+                <div className="flex items-center justify-center md:justify-start">
+                  <Icon name="Calendar" size={16} className="mr-2 text-blue-600 flex-shrink-0" />
+                  <span>59 занятий в году</span>
                 </div>
-                <div className="flex items-center">
-                  <Icon name="Award" size={16} className="mr-2 text-blue-600" />
-                  Призы за результат
+                <div className="flex items-center justify-center md:justify-start">
+                  <Icon name="Award" size={16} className="mr-2 text-blue-600 flex-shrink-0" />
+                  <span>Призы за результат</span>
                 </div>
               </div>
             </div>
@@ -231,7 +289,7 @@ const Index = () => {
             <p className="text-lg text-gray-600">Уникальная методика, проверенная практикой</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             <Card className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <Icon name="Brain" size={32} className="text-blue-600 mb-4" />
@@ -367,16 +425,16 @@ const Index = () => {
             </TabsList>
             
             <TabsContent value="main">
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid gap-3 md:grid-cols-2 md:gap-4">
                 {curriculum.slice(0, 20).map((lesson) => (
                   <Card key={lesson.id} className="hover:shadow-md transition-shadow">
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h4 className="font-medium text-gray-900">{lesson.title}</h4>
-                          <p className="text-sm text-gray-500">Занятие {lesson.id}</p>
+                    <CardContent className="p-3 md:p-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-gray-900 text-sm md:text-base leading-tight">{lesson.title}</h4>
+                          <p className="text-xs md:text-sm text-gray-500 mt-1">Занятие {lesson.id}</p>
                         </div>
-                        <Badge variant={lesson.type === "Алгебра" ? "default" : "secondary"}>
+                        <Badge variant={lesson.type === "Алгебра" ? "default" : "secondary"} className="text-xs flex-shrink-0">
                           {lesson.type}
                         </Badge>
                       </div>
@@ -392,26 +450,26 @@ const Index = () => {
                       Посмотреть все 59 занятий
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-4xl max-h-[80vh]">
+                  <DialogContent className="max-w-4xl max-h-[85vh] w-[95vw] sm:w-full">
                     <DialogHeader>
-                      <DialogTitle>Полная программа курса (59 занятий)</DialogTitle>
-                      <DialogDescription>
+                      <DialogTitle className="text-lg md:text-xl">Полная программа курса (59 занятий)</DialogTitle>
+                      <DialogDescription className="text-sm md:text-base">
                         Детальный план подготовки к ОГЭ по математике на весь учебный год
                       </DialogDescription>
                     </DialogHeader>
-                    <ScrollArea className="h-[60vh] pr-4">
-                      <div className="grid gap-3">
+                    <ScrollArea className="h-[65vh] pr-2 md:pr-4">
+                      <div className="grid gap-2 md:gap-3">
                         {fullCurriculum.map((lesson) => (
-                          <div key={lesson.id} className="flex items-center justify-between p-3 rounded-lg border hover:bg-gray-50 transition-colors">
-                            <div className="flex items-center space-x-3">
-                              <div className="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-medium">
+                          <div key={lesson.id} className="flex items-start justify-between p-2 md:p-3 rounded-lg border hover:bg-gray-50 transition-colors gap-3">
+                            <div className="flex items-start space-x-2 md:space-x-3 flex-1 min-w-0">
+                              <div className="w-6 h-6 md:w-8 md:h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs md:text-sm font-medium flex-shrink-0">
                                 {lesson.id}
                               </div>
-                              <div>
-                                <h4 className="font-medium text-gray-900">{lesson.title}</h4>
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-medium text-gray-900 text-sm md:text-base leading-tight">{lesson.title}</h4>
                               </div>
                             </div>
-                            <Badge variant={lesson.type === "Алгебра" ? "default" : "secondary"}>
+                            <Badge variant={lesson.type === "Алгебра" ? "default" : "secondary"} className="text-xs flex-shrink-0">
                               {lesson.type}
                             </Badge>
                           </div>
@@ -424,15 +482,15 @@ const Index = () => {
             </TabsContent>
             
             <TabsContent value="bonus">
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid gap-3 md:grid-cols-2 md:gap-4">
                 {bonusLessons.map((lesson, index) => (
                   <Card key={index} className="hover:shadow-md transition-shadow">
-                    <CardContent className="p-4">
+                    <CardContent className="p-3 md:p-4">
                       <div className="flex items-start space-x-3">
-                        <Icon name="Gift" size={20} className="text-blue-600 mt-1" />
-                        <div>
-                          <h4 className="font-medium text-gray-900">{lesson}</h4>
-                          <p className="text-sm text-gray-500">Бесплатное занятие</p>
+                        <Icon name="Gift" size={18} className="text-blue-600 mt-1 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-gray-900 text-sm md:text-base leading-tight">{lesson}</h4>
+                          <p className="text-xs md:text-sm text-gray-500 mt-1">Бесплатное занятие</p>
                         </div>
                       </div>
                     </CardContent>
@@ -485,14 +543,15 @@ const Index = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+                <div className="grid gap-4 md:grid-cols-2">
                   <div>
                     <label className="block text-sm font-medium mb-2">Имя родителя/ученика</label>
                     <Input 
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
                       placeholder="Ваше имя"
+                      className="h-12"
                       required
                     />
                   </div>
@@ -503,6 +562,7 @@ const Index = () => {
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
                       placeholder="+7 (999) 123-45-67"
+                      className="h-12"
                       required
                     />
                   </div>
@@ -514,6 +574,7 @@ const Index = () => {
                     value={formData.grade}
                     onChange={(e) => setFormData({...formData, grade: e.target.value})}
                     placeholder="8 или 9 класс"
+                    className="h-12"
                     required
                   />
                 </div>
@@ -525,10 +586,11 @@ const Index = () => {
                     onChange={(e) => setFormData({...formData, message: e.target.value})}
                     placeholder="Расскажите об уровне знаний ученика, есть ли проблемные темы..."
                     rows={4}
+                    className="resize-none"
                   />
                 </div>
                 
-                <Button type="submit" size="lg" className="w-full bg-blue-600 hover:bg-blue-700">
+                <Button type="submit" size="lg" className="w-full bg-blue-600 hover:bg-blue-700 h-12">
                   <Icon name="Send" size={20} className="mr-2" />
                   Отправить заявку
                 </Button>
